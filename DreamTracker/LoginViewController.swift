@@ -58,6 +58,7 @@ class LoginViewController: UIViewController {
                             self.labelFormMessage.text = ""
                             
                             if UserDefaults.standard.isLoggedIn() {
+                                self.transitionRightToLeft()
                                 let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                                 let controller = storyBoard.instantiateViewController(withIdentifier: "listIdentifier")
                                 self.present(controller, animated: true, completion: nil)
@@ -81,8 +82,16 @@ class LoginViewController: UIViewController {
         } else {
             labelFormMessage.text = "Please fill Email and Password"
         }
-        
-        
+    }
+    
+    func transitionRightToLeft() {
+        // https://stackoverflow.com/questions/37722323/how-to-present-view-controller-from-right-to-left-in-ios-using-swift
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
     }
     
     /*

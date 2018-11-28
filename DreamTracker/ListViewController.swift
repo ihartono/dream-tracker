@@ -19,6 +19,24 @@ class ListViewController: UITableViewController {
     
     @IBAction func btnLogout(_ sender: Any) {
         print("logout clicked")
+        UserDefaults.standard.setIsLoggedIn(value: false)
+        
+        if !UserDefaults.standard.isLoggedIn() {
+            transitionRightToLeft()
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyBoard.instantiateViewController(withIdentifier: "loginIdentifier")
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func transitionRightToLeft() {
+        // https://stackoverflow.com/questions/37722323/how-to-present-view-controller-from-right-to-left-in-ios-using-swift
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromLeft
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
     }
     
     /*
